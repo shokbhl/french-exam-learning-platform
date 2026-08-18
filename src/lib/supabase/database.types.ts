@@ -656,6 +656,51 @@ export type Database = {
         };
         Relationships: [];
       };
+      learner_progress: {
+        Row: {
+          user_id: string;
+          xp: number;
+          current_streak: number;
+          longest_streak: number;
+          last_active_on: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          xp?: number;
+          current_streak?: number;
+          longest_streak?: number;
+          last_active_on?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          xp?: number;
+          current_streak?: number;
+          longest_streak?: number;
+          last_active_on?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      lesson_completions: {
+        Row: {
+          user_id: string;
+          lesson_id: string;
+          completed_at: string;
+        };
+        Insert: {
+          user_id: string;
+          lesson_id: string;
+          completed_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          lesson_id?: string;
+          completed_at?: string;
+        };
+        Relationships: [];
+      };
       lesson_concepts: {
         Row: {
           lesson_id: string;
@@ -1455,15 +1500,61 @@ export type Database = {
         };
         Relationships: [];
       };
+      xp_events: {
+        Row: {
+          id: number;
+          user_id: string;
+          amount: number;
+          reason: string;
+          source_type: string;
+          source_id: string | null;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          amount: number;
+          reason: string;
+          source_type: string;
+          source_id?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          amount?: number;
+          reason?: string;
+          source_type?: string;
+          source_id?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
+      apply_xp_event: {
+        /** no arguments */
+        Args: Record<string, unknown>;
+        /** returns trigger */
+        Returns: unknown;
+      };
       attempt_review: {
         /** target_attempt_id uuid */
         Args: Record<string, unknown>;
         /** returns jsonb */
+        Returns: unknown;
+      };
+      award_lesson_xp: {
+        /** no arguments */
+        Args: Record<string, unknown>;
+        /** returns trigger */
+        Returns: unknown;
+      };
+      award_response_xp: {
+        /** no arguments */
+        Args: Record<string, unknown>;
+        /** returns trigger */
         Returns: unknown;
       };
       create_profile: {
