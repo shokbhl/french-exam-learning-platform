@@ -38,6 +38,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 *.tsbuildinfo
+next-env.d.ts
 
 # keys and certificates
 *.pem
