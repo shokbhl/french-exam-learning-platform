@@ -1,0 +1,1 @@
+import Link from"next/link";export default function UnauthorizedPage(){return <main className="standalone-page"><section className="auth-card"><p className="eyebrow">ACCÈS REFUSÉ</p><h1>Cette zone est protégée</h1><p>Un rôle éditeur ou administrateur est nécessaire.</p><Link className="primary" href="/">Retour au tableau de bord</Link></section></main>}

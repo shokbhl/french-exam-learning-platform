@@ -1,0 +1,2 @@
+import {describe,expect,it} from "vitest"; import {scheduleReview} from "./review";
+describe("spaced repetition",()=>{it("resets a forgotten card",()=>expect(scheduleReview({intervalDays:20,ease:2.5,repetitions:4},0)).toEqual({intervalDays:1,ease:2.3,repetitions:0}));it("grows intervals after successful recall",()=>expect(scheduleReview({intervalDays:3,ease:2.5,repetitions:2},2).intervalDays).toBeGreaterThan(3));it("never drops ease below the safe floor",()=>expect(scheduleReview({intervalDays:1,ease:1.3,repetitions:1},0).ease).toBe(1.3))});

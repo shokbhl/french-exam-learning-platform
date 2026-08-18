@@ -1,0 +1,1 @@
+import{MaterialManager}from"@/components/material-manager";import{requireStaff}from"@/lib/auth/require-staff";export default async function MaterialsPage(){await requireStaff();return <MaterialManager/>}

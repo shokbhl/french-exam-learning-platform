@@ -1,0 +1,1 @@
+import{ExamConfigEditor}from"@/components/exam-config-editor";import{requireStaff}from"@/lib/auth/require-staff";export default async function ExamAdminPage(){await requireStaff();return <ExamConfigEditor/>}

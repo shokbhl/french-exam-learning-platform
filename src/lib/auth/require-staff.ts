@@ -1,0 +1,2 @@
+import{redirect}from"next/navigation";import{isSupabaseConfigured}from"@/lib/env";import{createClient}from"@/lib/supabase/server";
+export async function requireStaff(){if(!isSupabaseConfigured())return{demo:true as const};const supabase=await createClient();const{data:{user}}=await supabase.auth.getUser();if(!user)redirect("/auth?next=/admin");const{data}=await supabase.from("user_roles").select("role").eq("user_id",user.id);if(!data?.some(r=>r.role==="admin"||r.role==="editor"))redirect("/unauthorized");return{demo:false as const,user}}

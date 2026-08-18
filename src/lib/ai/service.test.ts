@@ -1,0 +1,2 @@
+import{describe,expect,it}from"vitest";import{generateGroundedDraft,getAIProvider}from"./service";
+describe("AI boundary",()=>{it("is safely disabled without configuration",()=>expect(getAIProvider().isConfigured()).toBe(false));it("rejects invented source coordinates before provider use",async()=>await expect(generateGroundedDraft({task:"draft_lesson",input:"x",locale:"fr",promptVersion:"1",sources:[{sourceId:"",sourceVersion:1,page:0,evidence:""}]})).rejects.toThrow("citation"))});
