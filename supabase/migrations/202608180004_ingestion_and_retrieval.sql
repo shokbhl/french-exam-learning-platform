@@ -219,4 +219,8 @@ as $$
   limit greatest(1, least(match_limit, 50));
 $$;
 
-revoke execute on function public.search_source_chunks(vector, integer, numeric) from anon;
+-- EXECUTE defaults to PUBLIC, which anon inherits; revoke there and grant to
+-- the signed-in role only, so an unauthenticated caller cannot reach source
+-- text even though the function is security definer.
+revoke execute on function public.search_source_chunks(vector, integer, numeric) from public;
+grant execute on function public.search_source_chunks(vector, integer, numeric) to authenticated;

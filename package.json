@@ -12,6 +12,8 @@
     "test:e2e": "playwright test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "db:types": "node scripts/generate-db-types.mjs",
+    "db:test": "./tests/db/run.sh",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {

@@ -51,9 +51,16 @@ as $$
   )
 $$;
 
-revoke execute on function public.is_staff() from anon;
-revoke execute on function public.is_instructor() from anon;
-revoke execute on function public.has_role(public.app_role) from anon;
+-- Revoking from anon alone would achieve nothing: PostgreSQL grants EXECUTE on
+-- new functions to PUBLIC, and anon inherits it there. Drop the PUBLIC grant
+-- and hand the privilege back to the signed-in role explicitly.
+revoke execute on function public.is_staff() from public;
+revoke execute on function public.is_instructor() from public;
+revoke execute on function public.has_role(public.app_role) from public;
+
+grant execute on function public.is_staff() to authenticated;
+grant execute on function public.is_instructor() to authenticated;
+grant execute on function public.has_role(public.app_role) to authenticated;
 
 -- ---------------------------------------------------------------------------
 -- Anonymous access

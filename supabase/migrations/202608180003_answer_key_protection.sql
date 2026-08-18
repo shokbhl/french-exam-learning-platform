@@ -298,6 +298,12 @@ begin
 end
 $$;
 
-revoke execute on function public.staff_question_full(uuid) from anon;
-revoke execute on function public.submit_attempt_response(uuid, uuid, jsonb, integer) from anon;
-revoke execute on function public.attempt_review(uuid) from anon;
+-- EXECUTE is granted to PUBLIC by default, which anon inherits; revoke there
+-- and grant to the signed-in role only.
+revoke execute on function public.staff_question_full(uuid) from public;
+revoke execute on function public.submit_attempt_response(uuid, uuid, jsonb, integer) from public;
+revoke execute on function public.attempt_review(uuid) from public;
+
+grant execute on function public.staff_question_full(uuid) to authenticated;
+grant execute on function public.submit_attempt_response(uuid, uuid, jsonb, integer) to authenticated;
+grant execute on function public.attempt_review(uuid) to authenticated;

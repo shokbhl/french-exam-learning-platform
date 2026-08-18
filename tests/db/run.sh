@@ -44,4 +44,7 @@ done
 echo "==> Running RLS assertions"
 psql -v ON_ERROR_STOP=1 -d "$TEST_DB" -f tests/db/10_rls.test.sql
 
+echo "==> Running function assertions"
+psql -v ON_ERROR_STOP=1 -d "$TEST_DB" -f tests/db/20_functions.test.sql
+
 echo "==> Passed"
