@@ -1,4 +1,12 @@
 name: Quality gate
+#
+# Note on `npm install` vs `npm ci`: npm 11 produces a lock file that its
+# own `npm ci` rejects. The wasm32-wasi optional packages
+# (@tailwindcss/oxide-wasm32-wasi, @img/sharp-wasm32,
+# @unrs/resolver-binding-wasm32-wasi) declare bundled @emnapi dependencies
+# at conflicting ranges; they never install on linux-x64, but `npm ci`
+# validates their ranges regardless and fails. The committed lock file
+# still determines versions for `npm install`.
 on:
   pull_request:
   push:
@@ -15,7 +23,8 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # See the note at the top of this file on why not `npm ci`.
+      - run: npm install --no-audit --no-fund
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run test
@@ -47,7 +56,8 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # See the note at the top of this file on why not `npm ci`.
+      - run: npm install --no-audit --no-fund
       - name: Apply migrations and run RLS tests
         run: ./tests/db/run.sh
         env:
@@ -76,6 +86,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # See the note at the top of this file on why not `npm ci`.
+      - run: npm install --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e -- --project=chromium
