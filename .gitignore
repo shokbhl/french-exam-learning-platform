@@ -1,0 +1,49 @@
+# dependencies
+/node_modules/
+/.pnp/
+.pnp.*
+
+# Next.js and production output
+/.next/
+/out/
+/build/
+
+# tests and generated reports
+/coverage/
+/playwright-report/
+/test-results/
+
+# environment files and secrets
+.env
+.env.*
+!.env.example
+
+# private source material and uploads
+/uploads/
+/private-content/
+*.private.pdf
+
+# local databases
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Vercel local metadata
+/.vercel/
+
+# logs and caches
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.tsbuildinfo
+
+# keys and certificates
+*.pem
+*.key
+
+# editor and OS metadata
+.DS_Store
+.idea/
+.vscode/
