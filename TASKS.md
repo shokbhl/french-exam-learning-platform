@@ -32,8 +32,19 @@ against the lint / typecheck / unit test / build gate.
 - [x] Database-generated TypeScript types (`npm run db:types`), wired into
       the browser, server, and proxy clients
 - [x] Migrations, policies, and functions verified on PostgreSQL 17 + pgvector
-- [ ] Verified against a hosted Supabase project — **blocked, see below**
-- [ ] Storage buckets and signed URLs verified — **blocked, see below**
+- [x] Verified against the hosted Supabase project. All five migrations were
+      applied to the live project and the policies re-checked from a real
+      signed-in session over PostgREST: with two lessons present (one draft,
+      one published) a learner sees only the published one; with a private
+      source material and eight audit rows present a learner sees none of
+      either; `is_correct` and `correct_answer` return 403; inserting a
+      lesson, granting oneself `admin`, and awarding oneself XP all return
+      403; and one learner cannot write another's goals. The signup trigger
+      creates the profile and default role.
+- [x] Private storage buckets confirmed on the live project: `materials`
+      (25 MB) and `speaking-responses` (50 MB), both non-public
+- [ ] Signed URLs not yet exercised — no file has been uploaded through the
+      live project, so the download path is still unverified
 - [ ] Multi-tenant isolation: the schema is role-based and single-tenant, so
       "cross-organization" leakage cannot be enforced or tested until an
       organization/tenant boundary is designed
@@ -56,11 +67,17 @@ against the lint / typecheck / unit test / build gate.
       (Phase 5).
 - [ ] Persist onboarding, goals, attempts, answers, mistakes, review cards,
       study plans, writing, speaking
-- [ ] Remove the remaining fabricated learner figures from the dashboard:
-      the fixed "68% / 3 h 24 min" weekly goal, the hardcoded five-of-seven
-      active days, the skill scores in `src/lib/content.ts`, and the
-      placeholder learner identity ("Alex Morgan", level B2, NCLC 7) shown in
-      the sidebar and welcome banner
+- [x] Fabricated learner figures removed from the dashboard. The fixed
+      "68% / 3 h 24 min" weekly goal now reports real days of activity derived
+      from the XP ledger against the learner's own study-day target; the
+      hardcoded five-of-seven active days come from real dates; the learner
+      identity, declared level and NCLC target come from the profile and
+      goals; the greeting shows the real name and today's date. Per-skill
+      mastery is not tracked yet, so that card shows an explicit empty state
+      instead of the invented 74/81/62/70 scores, and the recommendation no
+      longer asserts a 12-point gap nothing measured. Demonstration figures
+      still appear when signed out or unconfigured, but now behind a banner
+      that says so.
 
 ## Phase 5 — Shared learning
 
@@ -126,13 +143,15 @@ against the lint / typecheck / unit test / build gate.
 
 These cannot be completed from the repository alone.
 
-1. **Supabase project.** No credentials exist; `.env.local` is a byte-identical
-   copy of `.env.example`. Required to verify auth flows, storage buckets, and
-   signed URLs, and to run the migrations against the real platform (the local
-   suite uses a compatibility shim for the `auth` and `storage` schemas).
-   Owner action: create a project, then put `NEXT_PUBLIC_SUPABASE_URL`,
-   `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` in
-   `.env.local` and in the Vercel project settings. Do not commit them.
+1. **Database connection string.** The project itself is provisioned and the
+   schema is applied. `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   and `SUPABASE_SERVICE_ROLE_KEY` are configured locally and in Vercel, but
+   `DATABASE_URL` is empty because Vercel stores the pooled connection string
+   as a write-only secret and the direct host is IPv6-only. Future migrations
+   are therefore applied through the dashboard SQL editor rather than `psql`,
+   and `npm run db:types` runs against the local shimmed database. Owner
+   action, optional: reset the database password and record a session-pooler
+   connection string in `.env.local`.
 
 2. **Embedding provider.** The retrieval schema fixes vector width at 1536.
    Choosing a provider with a different width requires a migration. No AI
