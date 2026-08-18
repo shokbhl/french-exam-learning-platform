@@ -32,6 +32,10 @@
 # Vercel local metadata
 /.vercel/
 
+# Supabase CLI local metadata
+/supabase/.temp/
+/supabase/.branches/
+
 # logs and caches
 npm-debug.log*
 yarn-debug.log*
