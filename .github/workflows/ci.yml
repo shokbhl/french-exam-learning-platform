@@ -22,6 +22,51 @@ jobs:
       - run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: 1
+  # Applies every migration to a throwaway database and asserts the row level
+  # security policies from the perspective of each role. The pgvector image is
+  # required because the retrieval schema creates the extension and an HNSW
+  # index.
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Apply migrations and run RLS tests
+        run: ./tests/db/run.sh
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: postgres
+      - name: Verify generated types match the migrations
+        run: |
+          npm run db:types
+          git diff --exit-code src/lib/supabase/database.types.ts \
+            || (echo "::error::database.types.ts is stale; run npm run db:types" && exit 1)
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: french_exam_rls_test
+
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 15
