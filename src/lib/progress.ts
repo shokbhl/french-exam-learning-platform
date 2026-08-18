@@ -5,7 +5,10 @@ export type LearnerState = {
   quizBest: number;
 };
 
-export const initialProgress: LearnerState = { streak: 12, xp: 2840, completedLessons: [], quizBest: 0 };
+// A new learner has done nothing yet. These were previously seeded with a
+// 12-day streak and 2840 XP, which presented invented achievement as the
+// learner's own record before they had answered a single question.
+export const initialProgress: LearnerState = { streak: 0, xp: 0, completedLessons: [], quizBest: 0 };
 export const storageKey = "parcours-francais-progress-v1";
 
 export function loadProgress(): LearnerState {
