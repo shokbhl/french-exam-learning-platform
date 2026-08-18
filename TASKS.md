@@ -42,13 +42,25 @@ against the lint / typecheck / unit test / build gate.
 
 - [x] Seeded learner progress removed (shipped a 12-day streak and 2840 XP as
       a new learner's own record)
-- [ ] Repository layer over Supabase
-- [ ] Persist onboarding, goals, lessons, attempts, answers, mistakes, review
-      cards, study plans, writing, speaking, XP, and progress
-- [ ] Offline/demo mode preserved when Supabase is unavailable
-- [ ] Remove hardcoded skill scores, weekly activity, and pathway progress
-      from `src/lib/content.ts`, which currently presents fixed numbers as the
-      learner's own record
+- [x] XP, streaks, and lesson completions persisted server-side, with a
+      progress repository that returns a distinct state for unconfigured,
+      signed-out, ready, and failed reads — a failed read never degrades into
+      plausible-looking numbers
+- [x] Dashboard reads progress on the server; local storage is used only as
+      the demonstration store when Supabase is unavailable
+- [ ] Lesson completion is **not yet persisted**: the demonstration lessons in
+      `src/lib/content.ts` are identified by slugs like `radio` and have no
+      corresponding rows in the `lessons` table, so a completion cannot be
+      recorded against them. Completing a lesson currently updates the
+      interface for the session only. Blocked on seeding real lessons
+      (Phase 5).
+- [ ] Persist onboarding, goals, attempts, answers, mistakes, review cards,
+      study plans, writing, speaking
+- [ ] Remove the remaining fabricated learner figures from the dashboard:
+      the fixed "68% / 3 h 24 min" weekly goal, the hardcoded five-of-seven
+      active days, the skill scores in `src/lib/content.ts`, and the
+      placeholder learner identity ("Alex Morgan", level B2, NCLC 7) shown in
+      the sidebar and welcome banner
 
 ## Phase 5 — Shared learning
 

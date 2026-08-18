@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, BarChart3, Bell, BookOpen, Check, ChevronDown, Clock3, Flame, Headphones, Home, LayoutGrid, Library, Menu, MessageCircle, PenLine, Play, Plus, Search, Settings, Sparkles, Target, Trophy, Volume2, X } from "lucide-react";
 import { examFormats, lessons, pathway, quiz, skills, weeklyActivity, type Exam } from "@/lib/content";
 import { initialProgress, loadProgress, saveProgress, type LearnerState } from "@/lib/progress";
+import type { ProgressState } from "@/lib/repositories/progress";
 
 type View = "Accueil" | "Apprendre" | "Examens" | "Progression" | "Studio";
 const nav: { label: View; icon: typeof Home }[] = [
@@ -13,15 +14,27 @@ const nav: { label: View; icon: typeof Home }[] = [
   { label: "Studio", icon: LayoutGrid },
 ];
 
-export default function Platform() {
+export default function Platform({ serverProgress }: { serverProgress?: ProgressState }) {
   const [view, setView] = useState<View>("Accueil");
   const [exam, setExam] = useState<Exam>("TEF Canada");
   const [mobile, setMobile] = useState(false);
-  const [progress, setProgress] = useState<LearnerState>(initialProgress);
+
+  // When the database answered, its figures are the record and local storage
+  // is not consulted at all. Local storage is only the demonstration store,
+  // used when Supabase is not configured.
+  const persisted = serverProgress?.status === "ready" ? serverProgress.snapshot : null;
+  const [progress, setProgress] = useState<LearnerState>(
+    persisted
+      ? { streak: persisted.currentStreak, xp: persisted.xp, completedLessons: persisted.completedLessonIds, quizBest: 0 }
+      : initialProgress,
+  );
   const [hydrated, setHydrated] = useState(false);
 
-  useEffect(() => { queueMicrotask(() => { setProgress(loadProgress()); setHydrated(true); }); }, []);
-  useEffect(() => { if (hydrated) saveProgress(progress); }, [progress, hydrated]);
+  useEffect(() => {
+    if (persisted) return;
+    queueMicrotask(() => { setProgress(loadProgress()); setHydrated(true); });
+  }, [persisted]);
+  useEffect(() => { if (hydrated && !persisted) saveProgress(progress); }, [progress, hydrated, persisted]);
 
   const completeLesson = (id: string) => setProgress((p) => p.completedLessons.includes(id) ? p : ({ ...p, xp: p.xp + 80, completedLessons: [...p.completedLessons, id] }));
   const navigate = (next: View) => { setView(next); setMobile(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
