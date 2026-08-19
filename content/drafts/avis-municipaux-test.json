@@ -1,0 +1,46 @@
+{
+  "set": {
+    "title": "Avis municipaux (test) · exercices",
+    "mode": "practice",
+    "status": "draft"
+  },
+  "questions": [
+    {
+      "stableKey": "avis-municipaux-etat-civil-1",
+      "skill": "READING",
+      "kind": "mcq",
+      "version": 1,
+      "difficulty": 2,
+      "prompt": "Que doit apporter une personne ayant une demande urgente le 12 juin ?",
+      "content": { "passage": "Les demandes urgentes peuvent être déposées à l'accueil principal avant 11 h 30, muni d'une pièce d'identité." },
+      "explanation": "Le texte exige une pièce d'identité et un dépôt avant 11 h 30.",
+      "choices": [
+        { "key": "a", "label": "Une pièce d'identité", "correct": true },
+        { "key": "b", "label": "Un justificatif de domicile", "explanation": "Le document exigé est une pièce d'identité, pas un justificatif de domicile." },
+        { "key": "c", "label": "Une carte d'abonnement", "explanation": "La carte d'abonnement concerne la bibliothèque, pas l'état civil." },
+        { "key": "d", "label": "Un rendez-vous confirmé", "explanation": "Aucun rendez-vous préalable n'est mentionné." }
+      ],
+      "evidence": [
+        { "sourceTitle": "Avis municipaux (test)", "page": 1, "text": "Les demandes urgentes peuvent etre deposees a l'accueil principal avant 11 h 30, muni d'une piece d'identite." }
+      ]
+    },
+    {
+      "stableKey": "avis-municipaux-pret-limite-2",
+      "skill": "WRITING",
+      "kind": "mcq",
+      "version": 1,
+      "difficulty": 3,
+      "prompt": "Comment formuler poliment une demande de dérogation à la limite de prêt ?",
+      "content": { "context": "Vous écrivez à la bibliothèque pour emprunter plus de trois titres audiovisuels." },
+      "explanation": "Une demande formelle expose la situation, puis formule la requête au conditionnel.",
+      "choices": [
+        { "key": "a", "label": "Je veux quatre DVD, c'est possible ?", "explanation": "Le registre est trop familier pour une demande écrite." },
+        { "key": "b", "label": "Serait-il possible d'emprunter exceptionnellement un titre supplémentaire cette semaine ?", "correct": true },
+        { "key": "c", "label": "Votre limite est absurde et doit changer.", "explanation": "Le ton accusateur dessert une demande de dérogation." }
+      ],
+      "evidence": [
+        { "sourceTitle": "Avis municipaux (test)", "page": 2, "text": "Le pret de documents audiovisuels reste limite a trois titres par abonne et par semaine." }
+      ]
+    }
+  ]
+}

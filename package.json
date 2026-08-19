@@ -14,15 +14,21 @@
     "format:check": "prettier --check .",
     "db:types": "node scripts/generate-db-types.mjs",
     "db:test": "./tests/db/run.sh",
-    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "content:import": "node scripts/import-content.mjs",
+    "content:ingest": "node scripts/ingest-material.ts",
+    "content:draft": "node scripts/draft-questions.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.118.0",
     "@hookform/resolvers": "^5.9.1",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.3",
     "clsx": "^2.1.1",
     "lucide-react": "^1.32.0",
+    "mammoth": "^1.12.1",
     "next": "16.3.1",
+    "pdfjs-dist": "^6.2.108",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-hook-form": "^7.85.0",

@@ -1,0 +1,110 @@
+{
+  "set": {
+    "title": "Compréhension écrite · Avis et annonces",
+    "mode": "reading",
+    "status": "published",
+    "skill": "READING"
+  },
+  "questions": [
+    {
+      "stableKey": "avis-bibliotheque-horaires",
+      "kind": "mcq",
+      "version": 1,
+      "difficulty": 2,
+      "prompt": "Quelle condition permet d’utiliser la salle d’étude après 18 h ?",
+      "content": {
+        "passage": "En raison de travaux, la bibliothèque municipale fermera exceptionnellement à 18 h cette semaine. Les personnes souhaitant travailler en soirée pourront utiliser la salle d’étude du deuxième étage jusqu’à 21 h, à condition de présenter une carte d’abonnement valide à l’accueil avant 17 h 45."
+      },
+      "explanation": "Le texte pose deux exigences cumulées : une carte d’abonnement valide, présentée avant 17 h 45.",
+      "choices": [
+        {
+          "key": "a",
+          "label": "Réserver une place en ligne la veille",
+          "explanation": "Aucune réservation n’est mentionnée dans l’avis."
+        },
+        {
+          "key": "b",
+          "label": "Présenter une carte d’abonnement valide avant 17 h 45",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Être accompagné d’un membre du personnel",
+          "explanation": "L’avis ne prévoit aucun accompagnement."
+        },
+        {
+          "key": "d",
+          "label": "S’inscrire auprès du deuxième étage après 18 h",
+          "explanation": "L’inscription doit avoir lieu avant 17 h 45, pas après la fermeture."
+        }
+      ]
+    },
+    {
+      "stableKey": "avis-bibliotheque-raison",
+      "kind": "mcq",
+      "version": 1,
+      "difficulty": 1,
+      "prompt": "Pourquoi les horaires sont-ils modifiés ?",
+      "content": {
+        "passage": "En raison de travaux, la bibliothèque municipale fermera exceptionnellement à 18 h cette semaine."
+      },
+      "explanation": "« En raison de travaux » indique explicitement la cause.",
+      "choices": [
+        {
+          "key": "a",
+          "label": "À cause de travaux",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "En raison d’un manque de personnel",
+          "explanation": "Le personnel n’est pas évoqué."
+        },
+        {
+          "key": "c",
+          "label": "Pour un inventaire annuel",
+          "explanation": "Aucun inventaire n’est mentionné."
+        },
+        {
+          "key": "d",
+          "label": "À la demande des abonnés",
+          "explanation": "La décision ne vient pas des abonnés d’après le texte."
+        }
+      ]
+    },
+    {
+      "stableKey": "courriel-reclamation-registre",
+      "skill": "WRITING",
+      "kind": "mcq",
+      "version": 1,
+      "difficulty": 3,
+      "prompt": "Quelle formule convient pour ouvrir une réclamation écrite à un service client ?",
+      "content": {
+        "context": "Vous écrivez au responsable d’un service après une livraison incomplète."
+      },
+      "explanation": "Une réclamation d’examen reste formelle, factuelle et courtoise : on expose l’objet avant de demander une action.",
+      "choices": [
+        {
+          "key": "a",
+          "label": "Salut, il manque des trucs dans mon colis.",
+          "explanation": "Le registre familier est pénalisé dans une lettre formelle."
+        },
+        {
+          "key": "b",
+          "label": "Je vous écris au sujet de la commande n° 4712, livrée incomplète le 12 mars.",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "C’est inadmissible, je compte porter plainte immédiatement.",
+          "explanation": "Le ton agressif nuit à la note de registre, même si le grief est réel."
+        },
+        {
+          "key": "d",
+          "label": "Colis incomplet. Réponse attendue.",
+          "explanation": "Le style télégraphique ne convient pas à une lettre formelle."
+        }
+      ]
+    }
+  ]
+}

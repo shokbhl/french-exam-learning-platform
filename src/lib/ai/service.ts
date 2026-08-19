@@ -1,4 +1,4 @@
-import type {AIProvider,AIRequest,AIResult} from "./types";import {ProviderNotConfiguredError} from "./types";
+import type {AIProvider,AIRequest,AIResult} from "./types";import {ProviderNotConfiguredError} from "./types";import {AnthropicProvider} from "./anthropic";
 class DisabledAIProvider implements AIProvider{readonly name="disabled";isConfigured(){return false}async generate(request:AIRequest):Promise<AIResult>{void request;throw new ProviderNotConfiguredError("L’assistance IA")}}
-export function getAIProvider():AIProvider{const provider=process.env.AI_PROVIDER??"disabled";if(provider==="disabled")return new DisabledAIProvider();throw new ProviderNotConfiguredError(`Le fournisseur IA « ${provider} »`)}
+export function getAIProvider():AIProvider{const provider=process.env.AI_PROVIDER??"disabled";if(provider==="disabled")return new DisabledAIProvider();if(provider==="anthropic")return new AnthropicProvider();throw new ProviderNotConfiguredError(`Le fournisseur IA « ${provider} »`)}
 export async function generateGroundedDraft(request:AIRequest){if(request.sources?.some(s=>!s.sourceId||s.page<1||!s.evidence.trim()))throw new Error("Chaque citation doit référencer une source, une version, une page et un extrait.");const result=await getAIProvider().generate(request);return{...result,status:"draft" as const}}

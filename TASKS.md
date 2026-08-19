@@ -169,14 +169,18 @@ against the lint / typecheck / unit test / build gate.
       ingestion job retry/event tracking, retrieval audit
 - [x] Grounded search returns source, version, and page for every hit, and
       returns nothing rather than guessing when no source matches
-- [ ] PDF text extraction, page by page
-- [ ] OCR adapter for scanned documents
-- [ ] Chunking implementation
-- [ ] Embedding provider adapter
+- [x] PDF text extraction, page by page (`scripts/ingest-material.ts`)
+- [x] Scanned-document reading through the Claude provider, opt-in per run
+      with `--allow-model-reading`; pages recorded as `ocr` with a confidence
+- [x] Chunking implementation, page ranges preserved across page breaks
+- [ ] Embedding provider adapter (retrieval still unused; drafting reads
+      chunks directly by document rather than by similarity)
 - [ ] MIME signature (magic byte) validation — currently only the
       client-supplied `file.type` is checked
-- [ ] Background ingestion worker
-- [ ] Draft lesson/vocabulary/question generation with human approval
+- [ ] Background ingestion worker (ingestion is a CLI step today)
+- [x] Draft question generation across skills, written to `content/drafts/`
+      for human review rather than into the database
+- [ ] Draft lesson and vocabulary generation
 
 ## Phase 9 — Exam simulator
 
