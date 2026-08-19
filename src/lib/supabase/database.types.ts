@@ -1761,6 +1761,10 @@ export type Database = {
           status: Database["public"]["Enums"]["content_status"];
           created_by: string | null;
           created_at: string | null;
+          published_at: string | null;
+          published_by: string | null;
+          released_at: string | null;
+          released_by: string | null;
         };
         Insert: {
           id?: string;
@@ -1779,6 +1783,10 @@ export type Database = {
           status?: Database["public"]["Enums"]["content_status"];
           created_by?: string | null;
           created_at?: string | null;
+          published_at?: string | null;
+          published_by?: string | null;
+          released_at?: string | null;
+          released_by?: string | null;
         };
         Update: {
           id?: string;
@@ -1797,11 +1805,29 @@ export type Database = {
           status?: Database["public"]["Enums"]["content_status"];
           created_by?: string | null;
           created_at?: string | null;
+          published_at?: string | null;
+          published_by?: string | null;
+          released_at?: string | null;
+          released_by?: string | null;
         };
         Relationships: [
           {
             foreignKeyName: "source_materials_created_by_fkey";
             columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "source_materials_published_by_fkey";
+            columns: ["published_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "source_materials_released_by_fkey";
+            columns: ["released_by"];
             isOneToOne: false;
             referencedRelation: "profiles";
             referencedColumns: ["id"];

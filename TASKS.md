@@ -127,8 +127,19 @@ against the lint / typecheck / unit test / build gate.
       published materials but only the released file row, and the download
       check returns true for the released document and false for the
       quote-only one.
-- [ ] Staff UI for publishing and releasing material (currently set directly
-      in the database)
+- [x] Staff UI for publishing and releasing material. The admin page listed
+      two hardcoded demonstration entries and never read the database; it now
+      shows real materials with their status, rights, and release state.
+      Draft → in review → published, and release as a separate confirmed
+      action, because handing over a file cannot be undone for copies already
+      downloaded.
+- [x] A material whose copyright status is still unverified cannot be
+      released, enforced by a database constraint rather than only in the
+      action that happens to call it. It can still be published and quoted in
+      exercises.
+- [x] Publication and release record who approved them and when; withdrawing
+      clears the stamp so a later re-publication cannot inherit an old
+      approval.
 
 ## Phase 5 — Shared learning
 

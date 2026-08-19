@@ -53,4 +53,7 @@ psql -v ON_ERROR_STOP=1 -d "$TEST_DB" -f tests/db/30_progress.test.sql
 echo "==> Running library assertions"
 psql -v ON_ERROR_STOP=1 -d "$TEST_DB" -f tests/db/40_library.test.sql
 
+echo "==> Running publication assertions"
+psql -v ON_ERROR_STOP=1 -d "$TEST_DB" -f tests/db/50_publication.test.sql
+
 echo "==> Passed"
