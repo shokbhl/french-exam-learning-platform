@@ -105,6 +105,11 @@ const functions = query(`
         select 1 from pg_depend d
         where d.objid = p.oid and d.deptype = 'e'
       )
+      -- Trigger and event-trigger functions are not callable through
+      -- PostgREST, and the platform installs some of its own (rls_auto_enable),
+      -- which would otherwise make generated output differ between a hosted
+      -- project and a local test database.
+      and p.prorettype not in ('trigger'::regtype, 'event_trigger'::regtype)
   ) s
 `);
 

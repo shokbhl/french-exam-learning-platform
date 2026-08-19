@@ -79,6 +79,32 @@ against the lint / typecheck / unit test / build gate.
       still appear when signed out or unconfigured, but now behind a banner
       that says so.
 
+## Phase 4b — Members-only access
+
+- [x] Every route requires a session. Only `/auth`, `/unauthorized` and the
+      web manifest are public, so a new page is private by default rather than
+      public until someone remembers to protect it. The gate is skipped when
+      Supabase is unconfigured, which keeps the offline demonstration usable.
+- [x] Sign-out. None existed; gating every route without it would have left a
+      signed-in learner with no way out.
+- [x] Registration handles email confirmation. This project has
+      `mailer_autoconfirm` off, so sign-up returns no session; the form now
+      says to open the confirmation link instead of redirecting into the gate
+      and bouncing straight back with no explanation. Sign-in also
+      distinguishes an unconfirmed address from a wrong password.
+- [x] A signed-in learner without goals is sent to onboarding first.
+- [x] Server-side Zod validation on both auth actions, and `next` is
+      restricted to same-origin paths so it cannot be used as an open redirect.
+- [x] End-to-end coverage against the real project: a signed-out visitor is
+      refused, sign-in leads to onboarding then a dashboard showing 0 XP with
+      no demonstration figures, and signing out revokes access again. The
+      demonstration specs skip when Supabase is configured and vice versa, so
+      both modes stay covered.
+- [x] Verified directly against production: 50 tables, all 50 with row level
+      security enabled, 86 policies, none enabled-but-policy-less, pgvector
+      0.8.2. Generated types are byte-identical from production and from the
+      local test database.
+
 ## Phase 5 — Shared learning
 
 - [ ] Canonical concepts and versioned lessons

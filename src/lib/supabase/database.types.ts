@@ -1533,34 +1533,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      apply_xp_event: {
-        /** no arguments */
-        Args: Record<string, unknown>;
-        /** returns trigger */
-        Returns: unknown;
-      };
       attempt_review: {
         /** target_attempt_id uuid */
         Args: Record<string, unknown>;
         /** returns jsonb */
-        Returns: unknown;
-      };
-      award_lesson_xp: {
-        /** no arguments */
-        Args: Record<string, unknown>;
-        /** returns trigger */
-        Returns: unknown;
-      };
-      award_response_xp: {
-        /** no arguments */
-        Args: Record<string, unknown>;
-        /** returns trigger */
-        Returns: unknown;
-      };
-      create_profile: {
-        /** no arguments */
-        Args: Record<string, unknown>;
-        /** returns trigger */
         Returns: unknown;
       };
       has_role: {
@@ -1581,12 +1557,6 @@ export type Database = {
         /** returns boolean */
         Returns: unknown;
       };
-      record_audit_event: {
-        /** no arguments */
-        Args: Record<string, unknown>;
-        /** returns trigger */
-        Returns: unknown;
-      };
       search_source_chunks: {
         /** query_embedding vector, match_limit integer DEFAULT 8, min_similarity numeric DEFAULT 0.25 */
         Args: Record<string, unknown>;
@@ -1603,12 +1573,6 @@ export type Database = {
         /** target_attempt_id uuid, target_version_id uuid, learner_answer jsonb, seconds_spent integer DEFAULT NULL::integer */
         Args: Record<string, unknown>;
         /** returns jsonb */
-        Returns: unknown;
-      };
-      touch_updated_at: {
-        /** no arguments */
-        Args: Record<string, unknown>;
-        /** returns trigger */
         Returns: unknown;
       };
     };

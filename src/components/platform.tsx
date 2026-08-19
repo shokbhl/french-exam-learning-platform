@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, BarChart3, Bell, BookOpen, Check, ChevronDown, Clock3, Flame, Headphones, Home, LayoutGrid, Library, Menu, MessageCircle, PenLine, Play, Plus, Search, Settings, Sparkles, Target, Trophy, Volume2, X } from "lucide-react";
+import { ArrowRight, BarChart3, Bell, BookOpen, Check, ChevronDown, Clock3, Flame, Headphones, Home, LayoutGrid, Library, Menu, MessageCircle, PenLine, Play, Plus, Search, Settings, Sparkles, Target, Trophy, Volume2, X, LogOut } from "lucide-react";
 import { examFormats, lessons, pathway, quiz, skills, weeklyActivity, type Exam } from "@/lib/content";
 import { initialProgress, loadProgress, saveProgress, type LearnerState } from "@/lib/progress";
 import type { ProgressSnapshot, ProgressState } from "@/lib/repositories/progress";
+import { signOut } from "@/app/auth/sign-out";
 
 type View = "Accueil" | "Apprendre" | "Examens" | "Progression" | "Studio";
 const nav: { label: View; icon: typeof Home }[] = [
@@ -106,7 +107,7 @@ export default function Platform({ serverProgress }: { serverProgress?: Progress
         <div className="route-links"><Link href="/practice"><Headphones size={18}/>Écouter & lire</Link><Link href="/production"><PenLine size={18}/>Écrire & parler</Link><Link href="/review"><Trophy size={18}/>Carnet & cartes</Link><Link href="/onboarding"><Target size={18}/>Mon objectif</Link><Link href="/admin/materials"><Library size={18}/>Matériels</Link><Link href="/admin/exams"><Settings size={18}/>Formats d’examen</Link></div>
         <div className="sidebar-bottom">
           <div className="streak-card"><span className="flame"><Flame size={21}/></span><div><strong>{progress.streak} jours</strong><small>Série en cours</small></div></div>
-          <button><Settings size={18}/>Paramètres</button>
+          {persisted ? <form action={signOut}><button type="submit" className="signout-button"><LogOut size={18}/>Se déconnecter</button></form> : <button><Settings size={18}/>Paramètres</button>}
           <div className="profile"><span>{initials(persisted?.displayName ?? null)}</span><div><strong>{persisted?.displayName ?? "Votre compte"}</strong><small>{persisted?.goals?.targetNclc ? `Objectif NCLC ${persisted.goals.targetNclc}` : "Objectif non défini"}</small></div><ChevronDown size={16}/></div>
         </div>
       </aside>
