@@ -50,4 +50,7 @@ psql -v ON_ERROR_STOP=1 -d "$TEST_DB" -f tests/db/20_functions.test.sql
 echo "==> Running progress assertions"
 psql -v ON_ERROR_STOP=1 -d "$TEST_DB" -f tests/db/30_progress.test.sql
 
+echo "==> Running library assertions"
+psql -v ON_ERROR_STOP=1 -d "$TEST_DB" -f tests/db/40_library.test.sql
+
 echo "==> Passed"

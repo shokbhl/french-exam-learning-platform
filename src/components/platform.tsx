@@ -104,7 +104,7 @@ export default function Platform({ serverProgress }: { serverProgress?: Progress
         <nav aria-label="Navigation principale">
           {nav.map(({ label, icon: Icon }) => <button key={label} onClick={() => navigate(label)} className={view === label ? "active" : ""}><Icon size={19}/><span>{label}</span></button>)}
         </nav>
-        <div className="route-links"><Link href="/practice"><Headphones size={18}/>Écouter & lire</Link><Link href="/production"><PenLine size={18}/>Écrire & parler</Link><Link href="/review"><Trophy size={18}/>Carnet & cartes</Link><Link href="/onboarding"><Target size={18}/>Mon objectif</Link><Link href="/admin/materials"><Library size={18}/>Matériels</Link><Link href="/admin/exams"><Settings size={18}/>Formats d’examen</Link></div>
+        <div className="route-links"><Link href="/practice"><Headphones size={18}/>Écouter & lire</Link><Link href="/production"><PenLine size={18}/>Écrire & parler</Link><Link href="/review"><Trophy size={18}/>Carnet & cartes</Link><Link href="/onboarding"><Target size={18}/>Mon objectif</Link><Link href="/library"><Library size={18}/>Bibliothèque</Link><Link href="/admin/materials"><Library size={18}/>Matériels</Link><Link href="/admin/exams"><Settings size={18}/>Formats d’examen</Link></div>
         <div className="sidebar-bottom">
           <div className="streak-card"><span className="flame"><Flame size={21}/></span><div><strong>{progress.streak} jours</strong><small>Série en cours</small></div></div>
           {persisted ? <form action={signOut}><button type="submit" className="signout-button"><LogOut size={18}/>Se déconnecter</button></form> : <button><Settings size={18}/>Paramètres</button>}

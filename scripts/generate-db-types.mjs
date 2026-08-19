@@ -113,6 +113,46 @@ const functions = query(`
   ) s
 `);
 
+
+// Foreign keys become the `Relationships` entries the client uses to resolve
+// embedded selects such as `.select("id, source_files(id)")`. Without them any
+// embedded query fails to type-check.
+const foreignKeys = query(`
+  select coalesce(json_agg(r order by r->>'table', r->>'name'), '[]'::json) from (
+    select json_build_object(
+      'table', cl.relname,
+      'name', con.conname,
+      'columns', (
+        select json_agg(a.attname order by k.ord)
+        from unnest(con.conkey) with ordinality k(attnum, ord)
+        join pg_attribute a on a.attrelid = con.conrelid and a.attnum = k.attnum
+      ),
+      'referencedRelation', fcl.relname,
+      'referencedColumns', (
+        select json_agg(a.attname order by k.ord)
+        from unnest(con.confkey) with ordinality k(attnum, ord)
+        join pg_attribute a on a.attrelid = con.confrelid and a.attnum = k.attnum
+      ),
+      -- One-to-one when the referencing columns are themselves unique.
+      'isOneToOne', exists (
+        select 1
+        from pg_index i
+        where i.indrelid = con.conrelid
+          and i.indisunique
+          and (
+            select array_agg(x order by x)
+            from unnest(string_to_array(i.indkey::text, ' ')::int2[]) x
+          ) = (select array_agg(y order by y) from unnest(con.conkey) y)
+      )
+    ) as r
+    from pg_constraint con
+    join pg_class cl on cl.oid = con.conrelid
+    join pg_namespace n on n.oid = cl.relnamespace
+    join pg_class fcl on fcl.oid = con.confrelid
+    where con.contype = 'f' and n.nspname = 'public'
+  ) s
+`);
+
 // ---------------------------------------------------------------------------
 // Type mapping
 // ---------------------------------------------------------------------------
@@ -229,9 +269,23 @@ function emitRelations(names, label, withWrites) {
     }
 
     // supabase-js resolves query result types through this key. Omitting it
-    // makes every `.from(...)` call collapse to `never`, so it must be
-    // present even when foreign keys are not described.
-    lines.push("        Relationships: [];");
+    // makes every `.from(...)` call collapse to `never`.
+    const rels = foreignKeys.filter((fk) => fk.table === name);
+    if (rels.length === 0) {
+      lines.push("        Relationships: [];");
+    } else {
+      lines.push("        Relationships: [");
+      for (const fk of rels) {
+        lines.push("          {");
+        lines.push(`            foreignKeyName: ${JSON.stringify(fk.name)};`);
+        lines.push(`            columns: [${fk.columns.map((c) => JSON.stringify(c)).join(", ")}];`);
+        lines.push(`            isOneToOne: ${fk.isOneToOne ? "true" : "false"};`);
+        lines.push(`            referencedRelation: ${JSON.stringify(fk.referencedRelation)};`);
+        lines.push(`            referencedColumns: [${fk.referencedColumns.map((c) => JSON.stringify(c)).join(", ")}];`);
+        lines.push("          },");
+      }
+      lines.push("        ];");
+    }
     lines.push("      };");
   }
   lines.push("    };");

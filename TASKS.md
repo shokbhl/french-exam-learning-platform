@@ -105,6 +105,31 @@ against the lint / typecheck / unit test / build gate.
       0.8.2. Generated types are byte-identical from production and from the
       local test database.
 
+## Phase 4c — Member library
+
+- [x] Members read the curated library. `source_materials` was staff-only, so
+      members could not see anything; a published material is now visible to
+      any member.
+- [x] Publication and redistribution are separate gates. A published material
+      may be quoted in an exercise without its file being handed over;
+      `student_file_access` decides that, and the file row itself is hidden
+      unless it is set. Licensed third-party text can therefore be used
+      without being redistributed.
+- [x] Downloads go through short-lived signed URLs (120s) minted server-side
+      after `may_download_source_file` has answered, so the storage bucket
+      stays closed to members and there is one authorization path rather than
+      two that can drift.
+- [x] Downloads are rate limited per learner and recorded in an append-only
+      `material_downloads` table, since licensed material carries
+      redistribution limits and who opened what has to be answerable.
+- [x] Verified on production: the private bucket refuses anonymous requests,
+      a signed URL returns the exact uploaded bytes, a member sees both
+      published materials but only the released file row, and the download
+      check returns true for the released document and false for the
+      quote-only one.
+- [ ] Staff UI for publishing and releasing material (currently set directly
+      in the database)
+
 ## Phase 5 — Shared learning
 
 - [ ] Canonical concepts and versioned lessons

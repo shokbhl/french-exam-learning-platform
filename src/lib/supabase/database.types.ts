@@ -42,7 +42,36 @@ export type Database = {
           due_at?: string | null;
           notes?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "assignments_instructor_id_fkey";
+            columns: ["instructor_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "assignments_lesson_id_fkey";
+            columns: ["lesson_id"];
+            isOneToOne: false;
+            referencedRelation: "lessons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "assignments_practice_set_id_fkey";
+            columns: ["practice_set_id"];
+            isOneToOne: false;
+            referencedRelation: "practice_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "assignments_student_id_fkey";
+            columns: ["student_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       attempt_responses: {
         Row: {
@@ -72,7 +101,22 @@ export type Database = {
           time_seconds?: number | null;
           feedback?: Json | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "attempt_responses_attempt_id_fkey";
+            columns: ["attempt_id"];
+            isOneToOne: false;
+            referencedRelation: "attempts";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "attempt_responses_question_version_id_fkey";
+            columns: ["question_version_id"];
+            isOneToOne: false;
+            referencedRelation: "question_versions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       attempts: {
         Row: {
@@ -108,7 +152,36 @@ export type Database = {
           score?: number | null;
           estimate?: Json | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "attempts_exam_version_id_fkey";
+            columns: ["exam_version_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_versions";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "attempts_mock_exam_id_fkey";
+            columns: ["mock_exam_id"];
+            isOneToOne: false;
+            referencedRelation: "mock_exams";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "attempts_practice_set_id_fkey";
+            columns: ["practice_set_id"];
+            isOneToOne: false;
+            referencedRelation: "practice_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "attempts_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       audio_assets: {
         Row: {
@@ -156,7 +229,15 @@ export type Database = {
           exam_tags?: Database["public"]["Enums"]["exam_code"][] | null;
           status?: Database["public"]["Enums"]["content_status"] | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "audio_assets_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "source_materials";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       audio_transcripts: {
         Row: {
@@ -180,7 +261,15 @@ export type Database = {
           segments?: Json;
           language?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "audio_transcripts_audio_id_fkey";
+            columns: ["audio_id"];
+            isOneToOne: false;
+            referencedRelation: "audio_assets";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       audit_logs: {
         Row: {
@@ -208,7 +297,15 @@ export type Database = {
           changes?: Json;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_actor_id_fkey";
+            columns: ["actor_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       chunk_embeddings: {
         Row: {
@@ -238,7 +335,15 @@ export type Database = {
           embedding?: string;
           created_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "chunk_embeddings_chunk_id_fkey";
+            columns: ["chunk_id"];
+            isOneToOne: false;
+            referencedRelation: "document_chunks";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       collocations: {
         Row: {
@@ -280,7 +385,22 @@ export type Database = {
           exam_task_id?: string;
           application_notes?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "concept_exam_tasks_concept_id_fkey";
+            columns: ["concept_id"];
+            isOneToOne: false;
+            referencedRelation: "concepts";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "concept_exam_tasks_exam_task_id_fkey";
+            columns: ["exam_task_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_tasks";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       concepts: {
         Row: {
@@ -313,7 +433,15 @@ export type Database = {
           current_version?: number;
           created_by?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "concepts_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       content_versions: {
         Row: {
@@ -346,7 +474,22 @@ export type Database = {
           created_by?: string | null;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "content_versions_concept_id_fkey";
+            columns: ["concept_id"];
+            isOneToOne: false;
+            referencedRelation: "concepts";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "content_versions_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       document_chunks: {
         Row: {
@@ -383,7 +526,15 @@ export type Database = {
           token_count?: number | null;
           created_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "document_chunks_source_file_id_fkey";
+            columns: ["source_file_id"];
+            isOneToOne: false;
+            referencedRelation: "source_files";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       document_pages: {
         Row: {
@@ -416,7 +567,15 @@ export type Database = {
           confidence?: number | null;
           created_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "document_pages_source_file_id_fkey";
+            columns: ["source_file_id"];
+            isOneToOne: false;
+            referencedRelation: "source_files";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       exam_sections: {
         Row: {
@@ -455,7 +614,15 @@ export type Database = {
           audio_replay_limit?: number | null;
           scoring_scale?: Json;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "exam_sections_exam_version_id_fkey";
+            columns: ["exam_version_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_versions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       exam_tasks: {
         Row: {
@@ -494,7 +661,15 @@ export type Database = {
           instructions?: string;
           settings?: Json;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "exam_tasks_section_id_fkey";
+            columns: ["section_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_sections";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       exam_versions: {
         Row: {
@@ -527,7 +702,15 @@ export type Database = {
           is_active?: boolean;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "exam_versions_exam_id_fkey";
+            columns: ["exam_id"];
+            isOneToOne: true;
+            referencedRelation: "exams";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       exams: {
         Row: {
@@ -584,7 +767,29 @@ export type Database = {
           prompt_version?: string | null;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "feedback_records_reviewer_id_fkey";
+            columns: ["reviewer_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "feedback_records_speaking_id_fkey";
+            columns: ["speaking_id"];
+            isOneToOne: false;
+            referencedRelation: "speaking_submissions";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "feedback_records_writing_id_fkey";
+            columns: ["writing_id"];
+            isOneToOne: false;
+            referencedRelation: "writing_submissions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       ingestion_events: {
         Row: {
@@ -612,7 +817,15 @@ export type Database = {
           details?: Json;
           created_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "ingestion_events_job_id_fkey";
+            columns: ["job_id"];
+            isOneToOne: false;
+            referencedRelation: "ingestion_jobs";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       ingestion_jobs: {
         Row: {
@@ -654,7 +867,15 @@ export type Database = {
           next_retry_at?: string | null;
           created_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "ingestion_jobs_source_file_id_fkey";
+            columns: ["source_file_id"];
+            isOneToOne: false;
+            referencedRelation: "source_files";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       learner_progress: {
         Row: {
@@ -681,7 +902,15 @@ export type Database = {
           last_active_on?: string | null;
           updated_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "learner_progress_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       lesson_completions: {
         Row: {
@@ -699,7 +928,22 @@ export type Database = {
           lesson_id?: string;
           completed_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "lesson_completions_lesson_id_fkey";
+            columns: ["lesson_id"];
+            isOneToOne: false;
+            referencedRelation: "lessons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "lesson_completions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       lesson_concepts: {
         Row: {
@@ -720,7 +964,22 @@ export type Database = {
           position?: number;
           exam_label?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "lesson_concepts_concept_id_fkey";
+            columns: ["concept_id"];
+            isOneToOne: false;
+            referencedRelation: "concepts";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "lesson_concepts_lesson_id_fkey";
+            columns: ["lesson_id"];
+            isOneToOne: false;
+            referencedRelation: "lessons";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       lesson_versions: {
         Row: {
@@ -744,7 +1003,15 @@ export type Database = {
           blocks?: Json;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "lesson_versions_lesson_id_fkey";
+            columns: ["lesson_id"];
+            isOneToOne: false;
+            referencedRelation: "lessons";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       lessons: {
         Row: {
@@ -780,7 +1047,49 @@ export type Database = {
           current_version?: number;
           created_by?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "lessons_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      material_downloads: {
+        Row: {
+          id: number;
+          source_file_id: string;
+          actor_id: string | null;
+          created_at: string;
+        };
+        Insert: {
+          source_file_id: string;
+          actor_id?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          source_file_id?: string;
+          actor_id?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "material_downloads_actor_id_fkey";
+            columns: ["actor_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "material_downloads_source_file_id_fkey";
+            columns: ["source_file_id"];
+            isOneToOne: false;
+            referencedRelation: "source_files";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       mistake_records: {
         Row: {
@@ -825,7 +1134,22 @@ export type Database = {
           mastery?: number | null;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "mistake_records_response_id_fkey";
+            columns: ["response_id"];
+            isOneToOne: false;
+            referencedRelation: "attempt_responses";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "mistake_records_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       mock_exam_sections: {
         Row: {
@@ -846,7 +1170,29 @@ export type Database = {
           practice_set_id?: string | null;
           position?: number;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "mock_exam_sections_exam_section_id_fkey";
+            columns: ["exam_section_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_sections";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "mock_exam_sections_mock_exam_id_fkey";
+            columns: ["mock_exam_id"];
+            isOneToOne: false;
+            referencedRelation: "mock_exams";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "mock_exam_sections_practice_set_id_fkey";
+            columns: ["practice_set_id"];
+            isOneToOne: false;
+            referencedRelation: "practice_sets";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       mock_exams: {
         Row: {
@@ -870,7 +1216,15 @@ export type Database = {
           status?: Database["public"]["Enums"]["content_status"] | null;
           settings?: Json | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "mock_exams_exam_version_id_fkey";
+            columns: ["exam_version_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_versions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       phrases: {
         Row: {
@@ -909,7 +1263,22 @@ export type Database = {
           question_version_id?: string | null;
           position?: number;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "practice_set_questions_practice_set_id_fkey";
+            columns: ["practice_set_id"];
+            isOneToOne: false;
+            referencedRelation: "practice_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "practice_set_questions_question_version_id_fkey";
+            columns: ["question_version_id"];
+            isOneToOne: false;
+            referencedRelation: "question_versions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       practice_sets: {
         Row: {
@@ -936,7 +1305,15 @@ export type Database = {
           status?: Database["public"]["Enums"]["content_status"] | null;
           settings?: Json | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "practice_sets_exam_version_id_fkey";
+            columns: ["exam_version_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_versions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       profiles: {
         Row: {
@@ -966,7 +1343,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey";
+            columns: ["id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       question_choices: {
         Row: {
@@ -996,7 +1381,15 @@ export type Database = {
           is_correct?: boolean;
           explanation?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "question_choices_question_version_id_fkey";
+            columns: ["question_version_id"];
+            isOneToOne: false;
+            referencedRelation: "question_versions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       question_evidence: {
         Row: {
@@ -1023,7 +1416,22 @@ export type Database = {
           evidence_text?: string;
           locator?: Json | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "question_evidence_question_version_id_fkey";
+            columns: ["question_version_id"];
+            isOneToOne: false;
+            referencedRelation: "question_versions";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "question_evidence_source_file_id_fkey";
+            columns: ["source_file_id"];
+            isOneToOne: false;
+            referencedRelation: "source_files";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       question_versions: {
         Row: {
@@ -1065,7 +1473,15 @@ export type Database = {
           distractor_explanations?: Json | null;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "question_versions_question_id_fkey";
+            columns: ["question_id"];
+            isOneToOne: false;
+            referencedRelation: "questions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       questions: {
         Row: {
@@ -1116,7 +1532,15 @@ export type Database = {
           body?: string;
           word_count?: number;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "reading_passage_versions_passage_id_fkey";
+            columns: ["passage_id"];
+            isOneToOne: false;
+            referencedRelation: "reading_passages";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       reading_passages: {
         Row: {
@@ -1146,7 +1570,15 @@ export type Database = {
           current_version?: number | null;
           source_id?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "reading_passages_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "source_materials";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       retrieval_queries: {
         Row: {
@@ -1176,7 +1608,15 @@ export type Database = {
           result_count?: number;
           created_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "retrieval_queries_actor_id_fkey";
+            columns: ["actor_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       review_cards: {
         Row: {
@@ -1212,7 +1652,22 @@ export type Database = {
           ease?: number | null;
           source_mistake_id?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "review_cards_source_mistake_id_fkey";
+            columns: ["source_mistake_id"];
+            isOneToOne: false;
+            referencedRelation: "mistake_records";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "review_cards_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       review_events: {
         Row: {
@@ -1231,7 +1686,15 @@ export type Database = {
           rating?: number | null;
           reviewed_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "review_events_card_id_fkey";
+            columns: ["card_id"];
+            isOneToOne: false;
+            referencedRelation: "review_cards";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       source_files: {
         Row: {
@@ -1270,7 +1733,15 @@ export type Database = {
           sha256?: string;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "source_files_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "source_materials";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       source_materials: {
         Row: {
@@ -1327,7 +1798,15 @@ export type Database = {
           created_by?: string | null;
           created_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "source_materials_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       speaking_submissions: {
         Row: {
@@ -1357,7 +1836,22 @@ export type Database = {
           transcript?: string | null;
           submitted_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "speaking_submissions_exam_task_id_fkey";
+            columns: ["exam_task_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_tasks";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "speaking_submissions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       student_goals: {
         Row: {
@@ -1402,7 +1896,15 @@ export type Database = {
           explanation_language?: string;
           updated_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "student_goals_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       study_plans: {
         Row: {
@@ -1429,7 +1931,15 @@ export type Database = {
           plan?: Json;
           status?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "study_plans_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       user_roles: {
         Row: {
@@ -1444,7 +1954,15 @@ export type Database = {
           user_id?: string;
           role?: Database["public"]["Enums"]["app_role"];
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       vocabulary_entries: {
         Row: {
@@ -1498,7 +2016,22 @@ export type Database = {
           word_count?: number;
           submitted_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "writing_submissions_exam_task_id_fkey";
+            columns: ["exam_task_id"];
+            isOneToOne: false;
+            referencedRelation: "exam_tasks";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "writing_submissions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       xp_events: {
         Row: {
@@ -1526,7 +2059,15 @@ export type Database = {
           source_id?: string | null;
           created_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "xp_events_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
     };
     Views: {
@@ -1553,6 +2094,12 @@ export type Database = {
       };
       is_staff: {
         /** no arguments */
+        Args: Record<string, unknown>;
+        /** returns boolean */
+        Returns: unknown;
+      };
+      may_download_source_file: {
+        /** target_file_id uuid */
         Args: Record<string, unknown>;
         /** returns boolean */
         Returns: unknown;
